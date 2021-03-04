@@ -6,6 +6,13 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+@NamedQueries({
+    @NamedQuery(
+            name = "findWordWithTranslations",
+            query = "select e from Word e INNER JOIN FETCH e.translations t where e.id = :id"
+    )}
+)
+
 @Entity
 @Table(name = "words")
 public class Word {
@@ -25,7 +32,7 @@ public class Word {
     @OneToOne(targetEntity = WordsCollection.class)
     private WordsCollection collection;
 
-    @ManyToMany(targetEntity = Translation.class)
+    @ManyToMany(targetEntity = Translation.class, fetch = FetchType.LAZY)
     @JoinTable(name = "words_translations",
         joinColumns = {@JoinColumn(name = "word_fk")},
         inverseJoinColumns = {@JoinColumn(name = "translation_fk")})
@@ -70,6 +77,14 @@ public class Word {
 
     public void setCollection(WordsCollection collection) {
         this.collection = collection;
+    }
+
+    public Set<Translation> getTranslations() {
+        return translations;
+    }
+
+    public void setTranslations(Set<Translation> translations) {
+        this.translations = translations;
     }
 
     @Override

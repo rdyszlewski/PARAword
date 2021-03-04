@@ -5,6 +5,13 @@ import com.parabbits.wordservice.data.collection.Language;
 import javax.persistence.*;
 import java.util.Objects;
 
+@NamedQueries({
+        @NamedQuery(
+                name = "selectUserIdFromCollection",
+                query = "select w.user.id from WordsCollection w where id = :id"
+        )
+})
+
 @Entity
 @Table(name = "collections")
 public class WordsCollection {
