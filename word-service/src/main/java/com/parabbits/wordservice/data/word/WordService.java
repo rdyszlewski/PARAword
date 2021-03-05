@@ -20,11 +20,13 @@ public class WordService {
     // TODO: wstawienie nowego wpisyu
 
     public Optional<Word> getWordById(long id){
-        return wordRepository.findByIdWithTranslations(id);
+//        return wordRepository.findByIdWithTranslations(id);
+        return null;
     }
 
     public Optional<Word> saveWord(Word word){
-        return wordRepository.save(word);
+//        return wordRepository.save(word);
+        return null;
     }
 
     public void addWord(Word word, Translation translation){

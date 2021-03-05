@@ -26,6 +26,9 @@ public class Word {
 
     private String description;
 
+    @Column(columnDefinition = "int default 0")
+    private int meaning;
+
     @Enumerated(value = EnumType.ORDINAL)
     private PartOfSpeech partOfSpeech;
 

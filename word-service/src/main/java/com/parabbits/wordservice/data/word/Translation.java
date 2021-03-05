@@ -17,7 +17,10 @@ public class Translation {
 
     private String description;
 
+    @Column(columnDefinition = "int default 0")
     private int meaning;
+
+    // TODO: tutaj będzie trzeba dodać część mowy prawdopodbnie
 
     @ManyToMany(mappedBy = "translations")
     private Set<Word> words;

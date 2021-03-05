@@ -1,0 +1,10 @@
+--TRUNCATE TABLE words_translations;
+--TRUNCATE TABLE translations;
+--TRUNCATE TABLE words;
+--TRUNCATE TABLE collections;
+--TRUNCATE TABLE languages;
+DELETE FROM words_translations;
+DELETE FROM translations;
+DELETE FROM words;
+DELETE FROM collections;
+DELETE FROM languages;

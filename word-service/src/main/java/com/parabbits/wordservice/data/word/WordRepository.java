@@ -1,6 +1,7 @@
 package com.parabbits.wordservice.data.word;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -12,31 +13,30 @@ import java.util.Optional;
 
 
 @Repository
-public class WordRepository  {
-
-
-    private EntityManager entityManager;
-
-    @Autowired
-    public WordRepository(EntityManager entityManager){
-        this.entityManager = entityManager;
-    }
-
-    public Optional<Word> findById(long id){
-        return Optional.of(entityManager.find(Word.class, id));
-    }
-
-    public Optional<Word> findByIdWithTranslations(long id){
-        TypedQuery query = (TypedQuery) entityManager.createNamedQuery("findWordWithTranslations");
-        query.setParameter("id", id);
-
-        Word word = (Word) query.getSingleResult();
-        return Optional.of(word);
-    }
-
-    public Optional<Word> save(Word word){
-        return Optional.of(entityManager.merge(word));
-    }
+public interface WordRepository extends JpaRepository<Word, Long> {
+//
+//    private EntityManager entityManager;
+//
+//    @Autowired
+//    public WordRepository(EntityManager entityManager){
+//        this.entityManager = entityManager;
+//    }
+//
+//    public Optional<Word> findById(long id){
+//        return Optional.of(entityManager.find(Word.class, id));
+//    }
+//
+//    public Optional<Word> findByIdWithTranslations(long id){
+//        TypedQuery query = (TypedQuery) entityManager.createNamedQuery("findWordWithTranslations");
+//        query.setParameter("id", id);
+//
+//        Word word = (Word) query.getSingleResult();
+//        return Optional.of(word);
+//    }
+//
+//    public Optional<Word> save(Word word){
+//        return Optional.of(entityManager.merge(word));
+//    }
 
 
 }
