@@ -7,6 +7,7 @@
     <groupId>org.parabbits</groupId>
     <artifactId>PARAword</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <modules>
         <module>word-service</module>
