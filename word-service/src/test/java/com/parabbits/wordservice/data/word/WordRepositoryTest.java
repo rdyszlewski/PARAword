@@ -84,22 +84,22 @@ public class WordRepositoryTest {
 
     @Test
     public void shouldFindByFilter(){
-        var userFilter1 = WordFilter.builder(1L).build();
+        WordFilter userFilter1 = WordFilter.builder(1L).build();
         testFindByFilter(userFilter1, Arrays.asList("dog", "dog", "car", "mouse"));
 
-        var userFilter2 = WordFilter.builder(2L).build();
+        WordFilter userFilter2 = WordFilter.builder(2L).build();
         testFindByFilter(userFilter2, Arrays.asList("duck", "phone"));
 
-        var wordFilter = WordFilter.builder(1L).name("dog").build();
+        WordFilter wordFilter = WordFilter.builder(1L).name("dog").build();
         testFindByFilter(wordFilter, Arrays.asList("dog", "dog"));
 
-        var collectionFilter = WordFilter.builder(1L).collectionId(1L).build();
+        WordFilter collectionFilter = WordFilter.builder(1L).collectionId(1L).build();
         testFindByFilter(collectionFilter, Arrays.asList("dog", "dog", "car", "mouse"));
 
-        var emptyCollectionFilter = WordFilter.builder(1L).collectionId(2L).build();
+        WordFilter emptyCollectionFilter = WordFilter.builder(1L).collectionId(2L).build();
         testFindByFilter(emptyCollectionFilter, Collections.emptyList());
 
-        var posFilter = WordFilter.builder(1L).partOfSpeech(PartOfSpeech.PRONOUN).build();
+        WordFilter posFilter = WordFilter.builder(1L).partOfSpeech(PartOfSpeech.PRONOUN).build();
         testFindByFilter(posFilter, Arrays.asList("dog", "dog", "mouse"));
     }
 
