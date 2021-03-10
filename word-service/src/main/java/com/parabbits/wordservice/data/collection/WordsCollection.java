@@ -1,6 +1,7 @@
 package com.parabbits.wordservice.data.collection;
 
 import com.parabbits.wordservice.data.collection.Language;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -25,10 +26,11 @@ public class WordsCollection {
 
     private String description;
 
-    @OneToOne(targetEntity = Language.class)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "language_id")
     private Language language;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "int check(user > 0)")
     private long user;
     // TODO: zastanowić się, czy ten user będzie tutaj ok
 
@@ -62,7 +64,9 @@ public class WordsCollection {
     }
 
     public void setLanguage(Language language) {
-        this.language = language;
+        if(language != null && language.getId() > 0){
+            this.language = language;
+        }
     }
 
     public long getUser() {
