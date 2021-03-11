@@ -1,5 +1,6 @@
 package com.parabbits.wordservice.data.word;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,13 +12,14 @@ import java.util.Optional;
 @Repository
 public interface TranslationRepository extends JpaRepository<Translation, Long> {
 
-    @EntityGraph(attributePaths = {"translations"})
+    @EntityGraph(attributePaths = {"words"})
     Optional<Translation> findById(Long id);
 
-    // TODO: dodać kiedyś findByCollection
+    @Query(value = "SELECT count(t)>0 FROM Translation t LEFT JOIN t.words w WHERE w.id = :wordId AND t.name = :translation")
+    boolean existsByWordAndName(long wordId, String translation);
 
-    // TODO: przemyśleć jak to powinno być
+    @Query(value = "SELECT t FROM Translation t LEFT JOIN t.words w WHERE w.id = :wordId")
+    List<Translation> findByWord(long wordId);
 
-//    @Query(value = "SELECT count(t)>0 FROM Translation t WHERE t.words.id = wordId")
-//    boolean exists(long wordId, String translation);
+    List<Translation> findAll(Specification<Translation> specification);
 }

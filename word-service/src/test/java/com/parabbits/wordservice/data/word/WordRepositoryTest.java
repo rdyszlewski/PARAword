@@ -60,7 +60,7 @@ public class WordRepositoryTest {
     public void shouldFindByCollection(){
         final boolean TRANSLATIONS_SHOULD_BY_EAGER = false;
         testCollection(1, Arrays.asList("dog", "dog", "cat", "mouse"), TRANSLATIONS_SHOULD_BY_EAGER);
-        testCollection(2, Arrays.asList("duck", "phone"), TRANSLATIONS_SHOULD_BY_EAGER);
+        testCollection(2, Arrays.asList("duck", "phone", "hound"), TRANSLATIONS_SHOULD_BY_EAGER);
     }
 
     private void testCollection(long collectionId, List<String> expectedWords, boolean shouldBeEager){
@@ -87,7 +87,7 @@ public class WordRepositoryTest {
         testFindByFilter(userFilter1, Arrays.asList("dog", "dog", "car", "mouse"));
 
         WordFilter userFilter2 = WordFilter.builder(2L).build();
-        testFindByFilter(userFilter2, Arrays.asList("duck", "phone"));
+        testFindByFilter(userFilter2, Arrays.asList("duck", "phone", "hound"));
 
         WordFilter wordFilter = WordFilter.builder(1L).name("dog").build();
         testFindByFilter(wordFilter, Arrays.asList("dog", "dog"));
