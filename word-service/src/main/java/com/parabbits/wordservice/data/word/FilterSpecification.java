@@ -1,12 +1,13 @@
 package com.parabbits.wordservice.data.word;
 
+import org.springframework.data.jpa.domain.Specification;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Map;
 
-public abstract class FilterSpecification<T> {
+public abstract class FilterSpecification<Filter, Entity> {
 
     @FunctionalInterface
     protected interface SpecificationCondition{
@@ -18,5 +19,13 @@ public abstract class FilterSpecification<T> {
         Predicate toPredicate();
     }
 
-    protected abstract Map<SpecificationCondition, SpecificationPredicate> getSpecificationMap(T filter, Root root, CriteriaBuilder criteriaBuilder, CriteriaQuery query);
+    public Specification<Entity> getSpecification(Filter filter){
+        return (Specification<Entity>) (root, criteriaQuery, criteriaBuilder) -> {
+            setupSpecification(filter, root, criteriaBuilder, criteriaQuery);
+            return getPredicate(filter, root, criteriaBuilder, criteriaQuery);
+        };
+    }
+
+    protected abstract Predicate getPredicate(Filter filter, Root<Entity> root, CriteriaBuilder criteriaBuilder, CriteriaQuery<?> query);
+    protected abstract void setupSpecification(Filter filter, Root<Entity> root, CriteriaBuilder criteriaBuilder, CriteriaQuery<?> criteriaQuery);
 }

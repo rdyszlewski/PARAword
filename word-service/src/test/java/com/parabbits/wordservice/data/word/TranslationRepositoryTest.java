@@ -122,7 +122,7 @@ public class TranslationRepositoryTest {
 
     private List<Translation> testFindByFilter(TranslationFilter filter, List<String> expectedTranslations){
         TranslationSpecifications specifications = new TranslationSpecifications();
-        List<Translation> translations = repository.findAll(specifications.getFilterSpecification(filter));
+        List<Translation> translations = repository.findAll(TranslationSpecifications.getFilterSpecification(filter));
         assertThat(translations.size()).isEqualTo(expectedTranslations.size());
         List<String> translationsNames = translations.stream().map(Translation::getName).collect(Collectors.toList());
         assertThat(translationsNames).containsAll(expectedTranslations);

@@ -107,5 +107,4 @@ public class WordRepositoryTest {
         assertThat(words.size()).isEqualTo(expectedWords.size());
         testAllTranslationsFetchMode(words, true);
     }
-
 }
