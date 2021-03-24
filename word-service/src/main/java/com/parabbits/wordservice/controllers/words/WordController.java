@@ -1,19 +1,16 @@
 package com.parabbits.wordservice.controllers.words;
 
 import com.parabbits.wordservice.data.collection.CollectionService;
-import com.parabbits.wordservice.data.collection.WordsCollection;
 import com.parabbits.wordservice.data.word.Translation;
 import com.parabbits.wordservice.data.word.Word;
 import com.parabbits.wordservice.data.word.WordService;
 import com.parabbits.wordservice.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,34 +37,34 @@ public class WordController {
 
     @PostMapping("/{collectionId}")
     public WordDTO createNewWord(@RequestBody WordDTO wordDTO, @PathVariable long collectionId, @AuthenticationPrincipal User user){
-        // TODO: TODO: te wszystkie rzeczy sprawdzające można przenieść do apektów
-        Optional<WordsCollection> optionalCollection = collectionService.getById(collectionId);
-        if(optionalCollection.orElseThrow(IllegalArgumentException::new).getUser() != user.getId()){
-            throw new AuthorizationServiceException(""); // TODO: dorobić komunikat
-        }
-        Word word = new Word();
-        word.setWord(wordDTO.getWord());
-        word.setDescription(wordDTO.getDescription());
-        word.setPartOfSpeech(wordDTO.getPartOfSpeech());
-        word.setCollection(optionalCollection.get()); // TODO: sprawdzić, czy to będzie ok
-
-        Optional<Word> insertedWord = wordService.saveWord(word);
-        if(insertedWord.isPresent()){
-            wordDTO.setId(insertedWord.get().getId());
-            return wordDTO;
-        }
+//        // TODO: TODO: te wszystkie rzeczy sprawdzające można przenieść do apektów
+//        Optional<WordsCollection> optionalCollection = collectionService.getById(collectionId);
+//        if(optionalCollection.orElseThrow(IllegalArgumentException::new).getUser() != user.getId()){
+//            throw new AuthorizationServiceException(""); // TODO: dorobić komunikat
+//        }
+//        Word word = new Word();
+//        word.setWord(wordDTO.getWord());
+//        word.setDescription(wordDTO.getDescription());
+//        word.setPartOfSpeech(wordDTO.getPartOfSpeech());
+//        word.setCollection(optionalCollection.get()); // TODO: sprawdzić, czy to będzie ok
+//
+//        Optional<Word> insertedWord = wordService.saveWord(word);
+//        if(insertedWord.isPresent()){
+//            wordDTO.setId(insertedWord.get().getId());
+//            return wordDTO;
+//        }
         // TODO: tutaj wyświetlić jakiś komunikat o błędzie
         return null;
     }
 
     // TODO: tutaj musi być inny zasób
     @PostMapping("/entry/{collectionId}")
-    public WordEntryDTO addWord(@RequestBody WordEntryDTO wordEntry, @PathVariable long collectionId, @AuthenticationPrincipal User user){
-        // TODO: zastanowić się, czy collectionId powinno być w zasobie, czy może przenieść to do body
-        Optional<WordsCollection> optionalCollection = collectionService.getById(collectionId);
-        if(optionalCollection.orElseThrow(IllegalArgumentException::new).getUser() != user.getId()){
-            throw new AuthorizationServiceException(""); // TODO: dorobić komunikat
-        }
+    public WordEntryDTO addWord(@RequestBody WordEntryDTO wordEntry, @PathVariable long collectionId, @AuthenticationPrincipal User user) {
+//        // TODO: zastanowić się, czy collectionId powinno być w zasobie, czy może przenieść to do body
+//        Optional<WordsCollection> optionalCollection = collectionService.getById(collectionId);
+//        if(optionalCollection.orElseThrow(IllegalArgumentException::new).getUser() != user.getId()){
+//            throw new AuthorizationServiceException(""); // TODO: dorobić komunikat
+//        }
 
         return null;
     }

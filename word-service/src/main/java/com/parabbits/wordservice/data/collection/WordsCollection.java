@@ -1,10 +1,11 @@
 package com.parabbits.wordservice.data.collection;
 
-import com.parabbits.wordservice.data.collection.Language;
-import org.hibernate.annotations.Check;
+import com.parabbits.wordservice.data.word.Word;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Set;
 
 @NamedQueries({
         @NamedQuery(
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "collections")
+@Data
 public class WordsCollection {
 
     @Id
@@ -27,70 +29,27 @@ public class WordsCollection {
     private String description;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "language_id")
-    private Language language;
+    @JoinColumn(name = "language1")
+    private Language learningLanguage;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "language2")
+    private Language nativeLanguage;
 
     @Column(columnDefinition = "int check(user > 0)")
     private long user;
     // TODO: zastanowić się, czy ten user będzie tutaj ok
 
+    @OneToMany(mappedBy = "collection", fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    private Set<Word> words;
 
-    public long getId() {
-        return id;
-    }
+    @Column(name = "is_public")
+    private Boolean isPublic;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        if(language != null && language.getId() > 0){
-            this.language = language;
+    public void setLearningLanguage(Language learningLanguage) {
+        if (learningLanguage != null && learningLanguage.getId() > 0) {
+            this.learningLanguage = learningLanguage;
         }
-    }
-
-    public long getUser() {
-        return user;
-    }
-
-    public void setUser(long user) {
-        this.user = user;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WordsCollection that = (WordsCollection) o;
-        return id == that.id &&
-                user == that.user &&
-                name.equals(that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(language, that.language);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, language, user);
     }
 }
