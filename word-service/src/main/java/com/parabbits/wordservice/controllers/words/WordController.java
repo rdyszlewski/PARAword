@@ -1,6 +1,6 @@
 package com.parabbits.wordservice.controllers.words;
 
-import com.parabbits.wordservice.data.collection.CollectionService;
+import com.parabbits.wordservice.collection.service.CollectionService;
 import com.parabbits.wordservice.data.word.Translation;
 import com.parabbits.wordservice.data.word.Word;
 import com.parabbits.wordservice.data.word.WordService;

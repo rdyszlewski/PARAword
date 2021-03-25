@@ -1,12 +1,10 @@
 package com.parabbits.wordservice.data.word;
 
-import com.parabbits.wordservice.data.collection.Language;
+import com.parabbits.wordservice.collection.data.Language;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity

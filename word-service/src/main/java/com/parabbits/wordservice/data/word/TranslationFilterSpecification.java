@@ -1,6 +1,6 @@
 package com.parabbits.wordservice.data.word;
 
-import com.parabbits.wordservice.data.collection.WordsCollection;
+import com.parabbits.wordservice.collection.data.WordsCollection;
 
 import javax.persistence.criteria.*;
 import java.text.MessageFormat;

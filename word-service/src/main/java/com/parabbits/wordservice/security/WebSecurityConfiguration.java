@@ -1,8 +1,6 @@
 package com.parabbits.wordservice.security;
 
-import com.parabbits.wordservice.data.word.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,8 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.persistence.EntityManager;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -23,7 +19,6 @@ import javax.persistence.EntityManager;
         prePostEnabled = true
 )
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;

@@ -1,6 +1,4 @@
-package com.parabbits.wordservice.controllers.collections;
-
-import com.parabbits.wordservice.data.collection.Language;
+package com.parabbits.wordservice.collection.service;
 
 import java.util.Objects;
 

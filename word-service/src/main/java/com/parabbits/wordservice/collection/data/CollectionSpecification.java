@@ -1,4 +1,4 @@
-package com.parabbits.wordservice.data.collection;
+package com.parabbits.wordservice.collection.data;
 
 import org.springframework.data.jpa.domain.Specification;
 

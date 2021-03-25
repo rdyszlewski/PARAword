@@ -1,5 +1,6 @@
 package com.parabbits.wordservice.data.collection;
 
+import com.parabbits.wordservice.collection.data.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.Test;

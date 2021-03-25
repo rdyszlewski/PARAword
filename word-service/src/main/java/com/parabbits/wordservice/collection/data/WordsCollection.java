@@ -1,8 +1,10 @@
-package com.parabbits.wordservice.data.collection;
+package com.parabbits.wordservice.collection.data;
 
 import com.parabbits.wordservice.data.word.Word;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -40,12 +42,16 @@ public class WordsCollection {
     private long user;
     // TODO: zastanowić się, czy ten user będzie tutaj ok
 
-    @OneToMany(mappedBy = "collection", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @EqualsAndHashCode.Exclude
     private Set<Word> words;
 
     @Column(name = "is_public")
     private Boolean isPublic;
+
+    @Transient
+    private long wordsCount;
 
     public void setLearningLanguage(Language learningLanguage) {
         if (learningLanguage != null && learningLanguage.getId() > 0) {

@@ -1,4 +1,4 @@
-package com.parabbits.wordservice.data.collection;
+package com.parabbits.wordservice.collection.data;
 
 import lombok.Builder;
 import lombok.Getter;
