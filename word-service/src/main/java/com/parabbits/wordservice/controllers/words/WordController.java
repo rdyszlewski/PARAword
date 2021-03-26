@@ -1,17 +1,13 @@
 package com.parabbits.wordservice.controllers.words;
 
 import com.parabbits.wordservice.collection.service.CollectionService;
-import com.parabbits.wordservice.data.word.Translation;
-import com.parabbits.wordservice.data.word.Word;
 import com.parabbits.wordservice.data.word.WordService;
 import com.parabbits.wordservice.security.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(path = "word",produces = "application/json")
@@ -28,10 +24,11 @@ public class WordController {
 
     @GetMapping("/{id}")
     public SimpleWordEntryDTO getWord(@PathVariable long id) {
-        Optional<Word> foundedWord = wordService.getWordById(id);
-        Word word = foundedWord.orElse(new Word());
-        List<String> translations = word.getTranslations().stream().map(Translation::getName).collect(Collectors.toList());
-        return new SimpleWordEntryDTO(word.getId(), word.getWord(), translations);
+//        Optional<Word> foundedWord = wordService.getWordById(id);
+//        Word word = foundedWord.orElse(new Word());
+//        List<String> translations = word.getTranslations().stream().map(Translation::getName).collect(Collectors.toList());
+//        return new SimpleWordEntryDTO(word.getId(), word.getWord(), translations);
+        return new SimpleWordEntryDTO(1, "Siemano", new ArrayList<>());
     }
 
 

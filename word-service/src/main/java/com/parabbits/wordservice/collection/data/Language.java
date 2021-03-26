@@ -22,4 +22,8 @@ public class Language {
 
     @Column(nullable = false)
     private String abbreviation;
+
+    public Language(long id) {
+        this.id = id;
+    }
 }
