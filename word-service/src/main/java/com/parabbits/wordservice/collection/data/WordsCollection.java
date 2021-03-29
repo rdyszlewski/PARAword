@@ -38,7 +38,7 @@ public class WordsCollection {
     @JoinColumn(name = "language2")
     private Language nativeLanguage;
 
-    @Column(columnDefinition = "int check(user > 0)")
+    @Column(columnDefinition = "int check(user > 0)", updatable = false)
     private long user;
     // TODO: zastanowić się, czy ten user będzie tutaj ok
 
