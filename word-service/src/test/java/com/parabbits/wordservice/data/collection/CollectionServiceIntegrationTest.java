@@ -38,6 +38,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CollectionServiceIntegrationTest {
 
+    @FunctionalInterface
+    private interface CollectionUpdater {
+        void update(WordsCollection collection);
+    }
+
     @Autowired
     private WordRepository wordRepository;
 
@@ -155,9 +160,5 @@ public class CollectionServiceIntegrationTest {
         assertThat(word33.isPresent()).isFalse();
     }
 
-    @FunctionalInterface
-    private static interface CollectionUpdater {
-        void update(WordsCollection collection);
-    }
 
 }
