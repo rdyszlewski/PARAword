@@ -2,7 +2,7 @@ package com.parabbits.wordservice.controllers.words;
 
 import com.parabbits.wordservice.collection.service.CollectionService;
 import com.parabbits.wordservice.data.word.WordService;
-import com.parabbits.wordservice.security.User;
+import com.parabbits.wordservice.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ public class WordController {
 
 
     @PostMapping("/{collectionId}")
-    public WordDTO createNewWord(@RequestBody WordDTO wordDTO, @PathVariable long collectionId, @AuthenticationPrincipal User user){
+    public WordDTO createNewWord(@RequestBody WordDTO wordDTO, @PathVariable long collectionId, @AuthenticationPrincipal UserPrincipal userPrincipal) {
 //        // TODO: TODO: te wszystkie rzeczy sprawdzające można przenieść do apektów
 //        Optional<WordsCollection> optionalCollection = collectionService.getById(collectionId);
 //        if(optionalCollection.orElseThrow(IllegalArgumentException::new).getUser() != user.getId()){
@@ -56,7 +56,7 @@ public class WordController {
 
     // TODO: tutaj musi być inny zasób
     @PostMapping("/entry/{collectionId}")
-    public WordEntryDTO addWord(@RequestBody WordEntryDTO wordEntry, @PathVariable long collectionId, @AuthenticationPrincipal User user) {
+    public WordEntryDTO addWord(@RequestBody WordEntryDTO wordEntry, @PathVariable long collectionId, @AuthenticationPrincipal UserPrincipal userPrincipal) {
 //        // TODO: zastanowić się, czy collectionId powinno być w zasobie, czy może przenieść to do body
 //        Optional<WordsCollection> optionalCollection = collectionService.getById(collectionId);
 //        if(optionalCollection.orElseThrow(IllegalArgumentException::new).getUser() != user.getId()){

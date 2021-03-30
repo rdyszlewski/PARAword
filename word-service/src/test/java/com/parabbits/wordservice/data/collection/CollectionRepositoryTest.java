@@ -22,8 +22,9 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -106,24 +107,24 @@ public class CollectionRepositoryTest {
 
     @Test
     public void shouldFindByFilter() {
-        CollectionFilter userFilter = CollectionFilter.builder().userId(2).build();
+        CollectionFilter userFilter = CollectionFilter.builder().userId(2L).build();
         testFilter(userFilter, Arrays.asList("Angielski 2", "Publiczny"));
-        CollectionFilter nameFilter = CollectionFilter.builder().name("Angielski").userId(1).build();
+        CollectionFilter nameFilter = CollectionFilter.builder().name("Angielski").userId(1L).build();
         testFilter(nameFilter, Arrays.asList("Angielski 1", "Angielski 3"));
 
-        CollectionFilter descriptionFilter = CollectionFilter.builder().description("kolekcja").userId(1).build();
+        CollectionFilter descriptionFilter = CollectionFilter.builder().description("kolekcja").userId(1L).build();
         testFilter(descriptionFilter, Arrays.asList("Niemiecki 1", "Niemiecki 2", "Angielski 3"));
 
-        CollectionFilter language1Filter = CollectionFilter.builder().language1(2).userId(1).build();
+        CollectionFilter language1Filter = CollectionFilter.builder().language1(2L).userId(1L).build();
         testFilter(language1Filter, Arrays.asList("Niemiecki 1", "Niemiecki 2", "Niemiecki osiem"));
 
-        CollectionFilter language2Filter = CollectionFilter.builder().language2(2).userId(1).build();
+        CollectionFilter language2Filter = CollectionFilter.builder().language2(2L).userId(1L).build();
         testFilter(language2Filter, Arrays.asList("Angielski 3", "Niemiecki osiem"));
 
         CollectionFilter allPublicFilter = CollectionFilter.builder().publicCollection(true).build();
         testFilter(allPublicFilter, Arrays.asList("Niemiecki 1", "Niemiecki 2", "Angielski 3", "Niemiecki osiem", "Publiczny"));
 
-        CollectionFilter userPublicFilter = CollectionFilter.builder().publicCollection(true).userId(2).build();
+        CollectionFilter userPublicFilter = CollectionFilter.builder().publicCollection(true).userId(2L).build();
         testFilter(userPublicFilter, Collections.singletonList("Publiczny"));
     }
 

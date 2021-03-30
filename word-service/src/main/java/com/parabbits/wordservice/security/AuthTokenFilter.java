@@ -44,8 +44,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         token = token.replace(TOKEN_PREFIX, "");
         Jws<Claims> claims =Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
         if(claims != null){
-            User user = new User(Long.parseLong(claims.getBody().getId()), claims.getBody().getSubject());
-            return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+            UserPrincipal userPrincipal = new UserPrincipal(Long.parseLong(claims.getBody().getId()), claims.getBody().getSubject());
+            return new UsernamePasswordAuthenticationToken(userPrincipal, null, new ArrayList<>());
         }
         return null;
     }
