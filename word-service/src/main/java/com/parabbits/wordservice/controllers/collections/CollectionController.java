@@ -43,32 +43,22 @@ public class CollectionController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<CollectionResponseDTO>> getAllCollections(
+    public List<CollectionResponseDTO> getAllCollections(
             @RequestParam(required = false) String name, @RequestParam(required = false) String description,
             @RequestParam(required = false) Long language1, @RequestParam(required = false) Long language2,
             @RequestParam(required = false) Long userId, @RequestParam(required = false) Boolean isPublic
             , @AuthenticationPrincipal UserPrincipal principal
     ) {
-        if (!isPublic && userId != null && !userId.equals(principal.getId())) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
         // TODO: dodać sprawdzanie, czy użytkownik ma możliwość pobrać dane
         CollectionFilter filter = CollectionFilter.builder().name(name).description(description).language1(language1)
                 .language2(language2).userId(userId).publicCollection(isPublic).build();
-        return new ResponseEntity<>(service.getByFilter(filter), HttpStatus.OK);
+        return service.getByFilter(filter);
     }
 
     @PostMapping
-    public ResponseEntity<CollectionResponseDTO> addCollection(@RequestBody CollectionDTO dto, @AuthenticationPrincipal UserPrincipal user) {
-        if (dto.getUserId() != dto.getUserId()) {
-            dto.setUserId(dto.getUserId());
-        }
-        CollectionResponseDTO responseDTO = service.addCollection(dto);
-        if (responseDTO != null) {
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-        }
-        // TODO: sprawdzić, czy ten błąd jest poprawny
-        return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+    public CollectionResponseDTO addCollection(@RequestBody CollectionDTO dto) {
+        // TODO: czy trzeba sprawdzać, czy użytkownik ma prawo do zapisu.
+        return service.addCollection(dto);
     }
 
 }
