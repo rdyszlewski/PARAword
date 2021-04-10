@@ -1,6 +1,7 @@
 package com.parabbits.wordservice.data.collection;
 
 import com.parabbits.wordservice.collection.data.*;
+import com.parabbits.wordservice.collection.service.CollectionAccess;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
@@ -139,6 +140,28 @@ public class CollectionRepositoryTest {
     public void shouldReturnPublicWhenIdIsNotSet() {
         CollectionFilter simpleFilter = CollectionFilter.builder().publicCollection(false).build();
         testFilter(simpleFilter, Arrays.asList("Niemiecki 1", "Niemiecki 2", "Angielski 3", "Niemiecki osiem", "Publiczny"));
+    }
+
+    @Test
+    public void shouldReturnCollectionAccess() {
+        CollectionAccess expectedObject = new CollectionAccess(false, 1L);
+        Optional<CollectionAccess> access = repository.findCollectionAccess(1L);
+        assertThat(access.isPresent()).isTrue();
+        assertThat(access.get()).isEqualTo(expectedObject);
+        assertThat(access.get().exist()).isTrue();
+        assertThat(access.get().isOwner(1L)).isTrue();
+        assertThat(access.get().isOwner(2L)).isFalse();
+        assertThat(access.get().canAccess(1L)).isTrue();
+
+        Optional<CollectionAccess> access2 = repository.findCollectionAccess(200L);
+        assertThat(access2.isPresent()).isFalse();
+
+        Optional<CollectionAccess> access3 = repository.findCollectionAccess(3L);
+        assertThat(access3.isPresent()).isTrue();
+        assertThat(access3.get().isOwner(1L)).isTrue();
+        assertThat(access3.get().isOwner(2L)).isFalse();
+        assertThat(access3.get().canAccess(1L)).isTrue();
+        assertThat(access3.get().canAccess(2L)).isTrue();
     }
 
     @Data

@@ -2,6 +2,7 @@ package com.parabbits.wordservice.data.collection;
 
 import com.parabbits.wordservice.collection.data.CollectionRepository;
 import com.parabbits.wordservice.collection.data.LanguageRepository;
+import com.parabbits.wordservice.collection.service.CollectionAccess;
 import com.parabbits.wordservice.collection.service.CollectionDTO;
 import com.parabbits.wordservice.collection.service.CollectionService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
@@ -68,6 +72,23 @@ public class CollectionServiceTest {
         CollectionDTO invalidUserDTO = new CollectionDTO(2L, "New", "Opis", 1, 3, 1, false);
         when(collectionRepository.existsById(2L)).thenReturn(true);
         assertThatThrownBy(() -> service.addCollection(invalidUserDTO)).isInstanceOf(exceptionClass);
+    }
+
+    @Test
+    public void shouldReturnCollectionAccess() {
+        when(collectionRepository.findCollectionAccess(1L)).thenReturn(Optional.of(new CollectionAccess(false, 1L)));
+        CollectionAccess result1 = service.getCollectionAccess(1L);
+        assertThat(result1.exist()).isTrue();
+        assertThat(result1.isOwner(1L)).isTrue();
+
+        when(collectionRepository.findCollectionAccess(1L)).thenReturn(Optional.empty());
+        CollectionAccess result2 = service.getCollectionAccess(1L);
+        assertThat(result2).isNotNull();
+        assertThat(result2.exist()).isFalse();
+        assertThat(result2.isOwner(1L)).isFalse();
+        assertThat(result2.canAccess(1L)).isFalse();
+
+
     }
 
     @FunctionalInterface

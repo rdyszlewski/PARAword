@@ -21,7 +21,6 @@ public class CollectionService {
         this.collectionRepository = collectionRepository;
     }
 
-
     public CollectionResponseDTO getById(Long id) {
         Optional<WordsCollection> optionalCollection = collectionRepository.findById(id);
         if (optionalCollection.isPresent()) {
@@ -29,6 +28,11 @@ public class CollectionService {
             return CollectionResponseMapper.toDTO(collection, collectionRepository);
         }
         return null;
+    }
+
+    public CollectionAccess getCollectionAccess(long collectionId) {
+        Optional<CollectionAccess> optionalResult = collectionRepository.findCollectionAccess(collectionId);
+        return optionalResult.orElse(new CollectionAccess(null, null));
     }
 
 
