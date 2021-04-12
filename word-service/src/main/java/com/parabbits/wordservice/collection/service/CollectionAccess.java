@@ -5,16 +5,23 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class CollectionAccess {
 
-    private Boolean isPublic;
-    private Long ownerId;
+    private final Boolean isPublic;
+    private final Long ownerId;
+    private boolean resourceExists;
 
     public CollectionAccess(Boolean isPublic, Long ownerId) {
         this.isPublic = isPublic;
         this.ownerId = ownerId;
+        this.resourceExists = true;
     }
 
-    public boolean exist() {
-        return ownerId != null;
+    private CollectionAccess(boolean exists, Boolean isPublic, Long ownerId) {
+        this(isPublic, ownerId);
+        this.resourceExists = exists;
+    }
+
+    public static CollectionAccess notFound() {
+        return new CollectionAccess(false, null, null);
     }
 
     public boolean isOwner(long userId) {
@@ -30,4 +37,19 @@ public class CollectionAccess {
         }
         return isPublic || ownerId.equals(userId);
     }
+
+    public static CollectionAccess ownerAccess(long userId) {
+        return new CollectionAccess(true, false, userId);
+    }
+
+    public static CollectionAccess getAccess(Boolean isPublic, Long userId) {
+        return new CollectionAccess(true, isPublic, userId);
+    }
+
+    public boolean exist() {
+        return resourceExists;
+    }
+
+    // TODO: stworzyć obiekt, który będzie ok i ktry nie będzie
+
 }

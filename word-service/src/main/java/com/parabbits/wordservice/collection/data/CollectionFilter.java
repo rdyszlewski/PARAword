@@ -9,11 +9,11 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class CollectionFilter {
 
-    private String name;
-    private String description;
-    private Long language1;
-    private Long language2;
-    private Long userId;
-    private Boolean publicCollection;
+    private final String name;
+    private final String description;
+    private final Long language1;
+    private final Long language2;
+    private final Long userId;
+    private final Boolean publicCollection;
 
 }

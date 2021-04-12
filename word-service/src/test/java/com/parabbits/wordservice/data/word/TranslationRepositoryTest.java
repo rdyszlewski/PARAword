@@ -30,33 +30,33 @@ public class TranslationRepositoryTest {
     private TranslationRepository repository;
 
     @Test
-    public void shouldFindById(){
+    public void shouldFindById() {
         Optional<Translation> dogTranslation = repository.findById(1L);
         assertThat(dogTranslation.isPresent()).isTrue();
-        testTranslation(dogTranslation.get(), "pies", "Piesek",1, Arrays.asList("dog", "hound"));
+        testTranslation(dogTranslation.get(), "pies", "Piesek", 1, Arrays.asList("dog", "hound"));
 
         Optional<Translation> mouseTranslation = repository.findById(4L);
         assertThat(mouseTranslation.isPresent()).isTrue();
-        testTranslation(mouseTranslation.get(), "mysz", null,0, Collections.singletonList("mouse"));
+        testTranslation(mouseTranslation.get(), "mysz", null, 0, Collections.singletonList("mouse"));
     }
 
-    private void testTranslation(Translation translation, String name, String description, int meaning, List<String> words){
+    private void testTranslation(Translation translation, String name, String description, int meaning, List<String> words) {
         assertThat(translation.getName()).isEqualTo(name);
         assertThat(translation.getDescription()).isEqualTo(description);
         assertThat(translation.getMeaning()).isEqualTo(meaning);
         testWordsFetchMode(translation.getWords(), true);
         assertThat(translation.getWords()).isNotEmpty();
         assertThat(translation.getWords().size()).isEqualTo(words.size());
-        List<String> wordsNames = translation.getWords().stream().map(Word::getWord).collect(Collectors.toList());;
+        List<String> wordsNames = translation.getWords().stream().map(Word::getWord).collect(Collectors.toList());
         assertThat(wordsNames).containsAll(words);
     }
 
-    private void testWordsFetchMode(Set<Word> words, boolean shouldBeInitialized){
+    private void testWordsFetchMode(Set<Word> words, boolean shouldBeInitialized) {
         assertThat(Hibernate.isInitialized(words)).isEqualTo(shouldBeInitialized);
     }
 
     @Test
-    public void shouldCheckThatTranslationExists(){
+    public void shouldCheckThatTranslationExists() {
         boolean dogExists = repository.existsByWordAndName(1L, "pies");
         assertThat(dogExists).isTrue();
 
@@ -65,23 +65,23 @@ public class TranslationRepositoryTest {
     }
 
     @Test
-    public void shouldFindByWord(){
+    public void shouldFindByWord() {
         testFindByWord(1L, Collections.singletonList("pies"));
         testFindByWord(4L, Arrays.asList("mysz", "myszka", "mysz"));
     }
 
-    private void testFindByWord(long wordId, List<String> expectedTranslations){
+    private void testFindByWord(long wordId, List<String> expectedTranslations) {
         List<Translation> translations = repository.findByWord(wordId);
         assertThat(translations.size()).isEqualTo(expectedTranslations.size());
         List<String> names = translations.stream().map(Translation::getName).collect(Collectors.toList());
         assertThat(names).containsAll(expectedTranslations);
-        for(Translation translation: translations){
+        for (Translation translation : translations) {
             testWordsFetchMode(translation.getWords(), false);
         }
     }
 
     @Test
-    public void shouldFindByFilter(){
+    public void shouldFindByFilter() {
         TranslationFilter nameFilter = TranslationFilter.builder(1L).name("pies").build();
         testFindByFilter(nameFilter, Collections.singletonList("pies"));
 
@@ -120,7 +120,7 @@ public class TranslationRepositoryTest {
         testFindByFilter(collectionFilter3, Arrays.asList("mysz"));
     }
 
-    private List<Translation> testFindByFilter(TranslationFilter filter, List<String> expectedTranslations){
+    private List<Translation> testFindByFilter(TranslationFilter filter, List<String> expectedTranslations) {
         TranslationSpecifications specifications = new TranslationSpecifications();
         List<Translation> translations = repository.findAll(TranslationSpecifications.getFilterSpecification(filter));
         assertThat(translations.size()).isEqualTo(expectedTranslations.size());

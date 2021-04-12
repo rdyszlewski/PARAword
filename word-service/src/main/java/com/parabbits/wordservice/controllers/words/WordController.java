@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping(path = "word",produces = "application/json")
+@RequestMapping(path = "word", produces = "application/json")
 public class WordController {
 
-    private WordService wordService;
-    private CollectionService collectionService;
+    private final WordService wordService;
+    private final CollectionService collectionService;
 
     @Autowired
-    public WordController(WordService wordService, CollectionService collectionService){
-        this.wordService =wordService;
+    public WordController(WordService wordService, CollectionService collectionService) {
+        this.wordService = wordService;
         this.collectionService = collectionService;
     }
 

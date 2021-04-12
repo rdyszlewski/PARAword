@@ -2,7 +2,6 @@ package com.parabbits.wordservice.data.word;
 
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.hibernate.Hibernate;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +29,21 @@ public class WordRepositoryTest {
 
     @Autowired
     private WordRepository repository;
-    
+
 
     @Test
-    public void shouldFindById(){
+    public void shouldFindById() {
         testWord(1L, "dog", Collections.singletonList("pies"));
         testWord(4L, "mouse", Arrays.asList("mysz", "myszka", "mysz"));
     }
 
-    private void testWord(final long id, final String word,final List<String> translations)
-    {
+    private void testWord(final long id, final String word, final List<String> translations) {
         Optional<Word> optionalWord = repository.findById(id);
         assertThat(optionalWord.isPresent()).isTrue();
         testWord(optionalWord.get(), id, word, translations);
     }
 
-    private void testWord(Word word, long id, String name, List<String> translations){
+    private void testWord(Word word, long id, String name, List<String> translations) {
         AssertionsForClassTypes.assertThat(word.getWord()).isEqualTo(name);
         AssertionsForClassTypes.assertThat(word.getId()).isEqualTo(id);
         AssertionsForClassTypes.assertThat(word.getCollection()).isNotNull();
@@ -57,13 +55,13 @@ public class WordRepositoryTest {
     }
 
     @Test
-    public void shouldFindByCollection(){
+    public void shouldFindByCollection() {
         final boolean TRANSLATIONS_SHOULD_BY_EAGER = false;
         testCollection(1, Arrays.asList("dog", "dog", "cat", "mouse"), TRANSLATIONS_SHOULD_BY_EAGER);
         testCollection(2, Arrays.asList("duck", "phone", "hound"), TRANSLATIONS_SHOULD_BY_EAGER);
     }
 
-    private void testCollection(long collectionId, List<String> expectedWords, boolean shouldBeEager){
+    private void testCollection(long collectionId, List<String> expectedWords, boolean shouldBeEager) {
         List<Word> words = repository.findByCollection(collectionId);
         assertThat(words.size()).isEqualTo(expectedWords.size());
         List<String> wordNames = words.stream().map(Word::getWord).collect(Collectors.toList());
@@ -71,18 +69,18 @@ public class WordRepositoryTest {
         testAllTranslationsFetchMode(words, shouldBeEager);
     }
 
-    private void testTranslationsFetchMode(Set<Translation> translations, boolean shouldBeInitialized){
+    private void testTranslationsFetchMode(Set<Translation> translations, boolean shouldBeInitialized) {
         assertThat(Hibernate.isInitialized(translations)).isEqualTo(shouldBeInitialized);
     }
 
-    private void testAllTranslationsFetchMode(List<Word> words, boolean isEager){
-        for(Word word: words){
+    private void testAllTranslationsFetchMode(List<Word> words, boolean isEager) {
+        for (Word word : words) {
             testTranslationsFetchMode(word.getTranslations(), isEager);
         }
     }
 
     @Test
-    public void shouldFindByFilter(){
+    public void shouldFindByFilter() {
         WordFilter userFilter1 = WordFilter.builder(1L).build();
         testFindByFilter(userFilter1, Arrays.asList("dog", "dog", "car", "mouse"));
 
@@ -102,7 +100,7 @@ public class WordRepositoryTest {
         testFindByFilter(posFilter, Arrays.asList("dog", "dog", "mouse"));
     }
 
-    private void testFindByFilter(WordFilter filter, List<String> expectedWords){
+    private void testFindByFilter(WordFilter filter, List<String> expectedWords) {
         List<Word> words = repository.findAll(WordSpecifications.filterWords(filter));
         assertThat(words.size()).isEqualTo(expectedWords.size());
         testAllTranslationsFetchMode(words, true);

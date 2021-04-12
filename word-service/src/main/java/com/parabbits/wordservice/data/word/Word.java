@@ -40,8 +40,8 @@ public class Word {
 
     @ManyToMany(targetEntity = Translation.class, fetch = FetchType.LAZY)
     @JoinTable(name = "words_translations",
-        joinColumns = {@JoinColumn(name = "word_fk")},
-        inverseJoinColumns = {@JoinColumn(name = "translation_fk")})
+            joinColumns = {@JoinColumn(name = "word_fk")},
+            inverseJoinColumns = {@JoinColumn(name = "translation_fk")})
     private Set<Translation> translations;
 
 }

@@ -7,18 +7,18 @@ import lombok.Getter;
 @Builder(builderMethodName = "innerBuilder")
 public class TranslationFilter {
 
-    private long userId = -1;
-    private String name;
-    private String word;
-    private String description;
-    private long collectionId = -1;
-    private PartOfSpeech partOfSpeech;
+    private final long userId = -1;
+    private final String name;
+    private final String word;
+    private final String description;
+    private final long collectionId = -1;
+    private final PartOfSpeech partOfSpeech;
     @Builder.Default
-    private int meaning = -1;
-    private long languageId = -1;
+    private final int meaning = -1;
+    private final long languageId = -1;
 
-    public static TranslationFilter.TranslationFilterBuilder builder(long userId){
-        assert userId> 0;
+    public static TranslationFilter.TranslationFilterBuilder builder(long userId) {
+        assert userId > 0;
         return innerBuilder().userId(userId);
     }
 

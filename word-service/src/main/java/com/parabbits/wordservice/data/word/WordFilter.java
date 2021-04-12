@@ -9,16 +9,16 @@ import lombok.Getter;
 public class WordFilter {
 
     @NotNull
-    private long userId;
-    private String name;
-    private long collectionId;
-    private PartOfSpeech partOfSpeech;
+    private final long userId;
+    private final String name;
+    private final long collectionId;
+    private final PartOfSpeech partOfSpeech;
     // TODO: dodać tutaj kategorię
     // TODO: prawdopodobnie można doddać też język
-    private int limit;
+    private final int limit;
 
-    public static WordFilterBuilder builder(long userId){
-        assert userId> 0;
+    public static WordFilterBuilder builder(long userId) {
+        assert userId > 0;
         return innerBuilder().userId(userId);
     }
 

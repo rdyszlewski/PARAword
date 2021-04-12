@@ -8,28 +8,28 @@ import java.util.Optional;
 @Service
 public class WordService {
 
-    private WordRepository wordRepository;
-    private TranslationRepository translationRepository;
+    private final WordRepository wordRepository;
+    private final TranslationRepository translationRepository;
 
     @Autowired
-    public WordService(WordRepository wordRepository, TranslationRepository translationRepository){
+    public WordService(WordRepository wordRepository, TranslationRepository translationRepository) {
         this.wordRepository = wordRepository;
         this.translationRepository = translationRepository;
     }
 
     // TODO: wstawienie nowego wpisyu
 
-    public Optional<Word> getWordById(long id){
+    public Optional<Word> getWordById(long id) {
 //        return wordRepository.findByIdWithTranslations(id);
         return null;
     }
 
-    public Optional<Word> saveWord(Word word){
+    public Optional<Word> saveWord(Word word) {
 //        return wordRepository.save(word);
         return null;
     }
 
-    public void addWord(Word word, Translation translation){
+    public void addWord(Word word, Translation translation) {
         // TODO: sprawdzić, czy słowo istnieje
         // TODO: sprawdzić, czy tłumaczenie istnieje
 

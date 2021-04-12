@@ -144,7 +144,7 @@ public class CollectionRepositoryTest {
 
     @Test
     public void shouldReturnCollectionAccess() {
-        CollectionAccess expectedObject = new CollectionAccess(false, 1L);
+        CollectionAccess expectedObject = CollectionAccess.getAccess(false, 1L);
         Optional<CollectionAccess> access = repository.findCollectionAccess(1L);
         assertThat(access.isPresent()).isTrue();
         assertThat(access.get()).isEqualTo(expectedObject);

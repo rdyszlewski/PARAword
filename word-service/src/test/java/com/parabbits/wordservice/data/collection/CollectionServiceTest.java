@@ -76,7 +76,7 @@ public class CollectionServiceTest {
 
     @Test
     public void shouldReturnCollectionAccess() {
-        when(collectionRepository.findCollectionAccess(1L)).thenReturn(Optional.of(new CollectionAccess(false, 1L)));
+        when(collectionRepository.findCollectionAccess(1L)).thenReturn(Optional.of(CollectionAccess.getAccess(false, 1L)));
         CollectionAccess result1 = service.getCollectionAccess(1L);
         assertThat(result1.exist()).isTrue();
         assertThat(result1.isOwner(1L)).isTrue();
@@ -92,7 +92,7 @@ public class CollectionServiceTest {
     }
 
     @FunctionalInterface
-    private static interface ServiceExecutor {
+    private interface ServiceExecutor {
         void execute(CollectionDTO dto, CollectionService service);
     }
 

@@ -2,7 +2,6 @@ package com.parabbits.wordservice.controllers.words;
 
 import com.parabbits.wordservice.data.word.PartOfSpeech;
 
-import java.util.List;
 import java.util.Objects;
 
 public class WordDTO {

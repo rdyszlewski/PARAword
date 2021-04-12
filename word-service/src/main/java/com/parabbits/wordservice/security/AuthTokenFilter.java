@@ -26,24 +26,24 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try{
+        try {
             String header = request.getHeader(HEADER_STRING);
-            if(header != null && header.startsWith(TOKEN_PREFIX)){
+            if (header != null && header.startsWith(TOKEN_PREFIX)) {
                 UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
-                SecurityContextHolder.getContext().setAuthentication(authentication);;
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
             SecurityContextHolder.getContext().setAuthentication(null);
         }
         filterChain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
+    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
         token = token.replace(TOKEN_PREFIX, "");
-        Jws<Claims> claims =Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
-        if(claims != null){
+        Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+        if (claims != null) {
             UserPrincipal userPrincipal = new UserPrincipal(Long.parseLong(claims.getBody().getId()), claims.getBody().getSubject());
             return new UsernamePasswordAuthenticationToken(userPrincipal, null, new ArrayList<>());
         }

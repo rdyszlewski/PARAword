@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class CollectionService {
 
     private LanguageRepository languageRepository;
-    private CollectionRepository collectionRepository;
+    private final CollectionRepository collectionRepository;
 
     @Autowired
     public CollectionService(CollectionRepository collectionRepository) {
@@ -32,7 +32,7 @@ public class CollectionService {
 
     public CollectionAccess getCollectionAccess(long collectionId) {
         Optional<CollectionAccess> optionalResult = collectionRepository.findCollectionAccess(collectionId);
-        return optionalResult.orElse(new CollectionAccess(null, null));
+        return optionalResult.orElse(CollectionAccess.notFound());
     }
 
 
