@@ -1,6 +1,6 @@
 package com.parabbits.wordservice.collection.data;
 
-import com.parabbits.wordservice.data.word.Word;
+import com.parabbits.wordservice.word.data.word.Word;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.LazyCollection;

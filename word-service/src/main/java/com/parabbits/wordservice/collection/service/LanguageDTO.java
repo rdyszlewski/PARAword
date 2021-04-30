@@ -8,4 +8,5 @@ import lombok.Data;
 public class LanguageDTO {
     private long id;
     private String abbr;
+
 }
